@@ -1,0 +1,62 @@
+from netmiko import ConnectHandler
+import warnings
+warnings.filterwarnings(action='ignore',module='.*paramiko.*')
+import os
+
+if os.path.exists("script_output"):
+  os.remove("script_output")
+  print("exisiting result log file has been deleted by the Python file tool")
+else:
+  print("exisiting result log file  does not exist")
+
+a_file = open("logs", "r")
+list_of_lists = []
+for line in a_file:
+  line_list = line.split()
+  list_of_lists.append(line_list)
+a_file.close()
+
+user1 = (list_of_lists[0])
+pass2 = (list_of_lists[1])
+
+strippedText1 = str(user1).replace('[','').replace(']','').replace('\'','')
+strippedText2 = str(pass2).replace('[','').replace(']','').replace('\'','')
+
+usernm = strippedText1
+passwd = strippedText2
+
+successful_devices = []
+failed_devices = []
+device_doc = open("adevice", "r")
+
+for node in device_doc:
+    aruba = {
+        'device_type':'hp_procurve',
+        'ip':node.strip(),
+        'username':usernm,
+        'password':passwd,
+    }
+
+    try:
+        command_doc = open("acommand", "r")
+        for commands_to_run in command_doc:
+            net_connect = ConnectHandler(**aruba)
+            output = net_connect.send_command(commands_to_run)
+            file_write = open("script_output", "a")
+            file_write.write("\n")
+            file_write.write(aruba['ip'])
+            file_write.write("\n")
+            file_write.write(commands_to_run)
+            file_write.write(output)
+            file_write.write("\n")
+            print("\n")
+            print("Successful connection to", aruba['ip'])
+        else:
+            print("running script")
+
+    except:
+        print("\n")
+        print("could not connect to", aruba['ip'])
+
+print("\nscript completed.")
+exit()
