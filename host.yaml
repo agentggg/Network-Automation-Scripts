@@ -1,0 +1,19 @@
+---
+device-1:
+    hostname: '192.168.0.107'
+    port: 22
+    username: 'cisco'
+    password: 'cisco'
+    platform: 'cisco_ios'
+device-2:
+    hostname: '192.168.0.139'
+    port: 22
+    username: 'cisco'
+    password: 'cisco'
+    platform: 'cisco_ios'
+device-3:
+    hostname: '192.168.0.157'
+    port: 22
+    username: 'cisco'
+    password: 'cisco'
+    platform: 'cisco_ios'
