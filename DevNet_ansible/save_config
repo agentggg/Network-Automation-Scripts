@@ -1,0 +1,15 @@
+---
+ - name: saving running configure
+   hosts: "all_network"
+   gather_facts: false
+   connection: network_cli
+   become: yes
+   become_method: enable
+   tasks:
+      - name: Saving IOS config
+        ios_config:
+             save_when: always
+        register: output
+      - name: Debug output
+        debug:
+          msg: "{{ output }}"
