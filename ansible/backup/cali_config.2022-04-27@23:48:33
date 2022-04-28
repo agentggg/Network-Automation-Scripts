@@ -1,0 +1,195 @@
+Building configuration...
+
+Current configuration : 2581 bytes
+!
+upgrade fpd auto
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname GA-DC
+!
+boot-start-marker
+boot-end-marker
+!
+logging message-counter syslog
+enable secret 5 $1$Z8nx$iJ3HOj6eHftihopdj97jI.
+!
+no aaa new-model
+ip source-route
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+ip domain name cisco.cisco
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username cisco password 0 cisco
+archive
+ log config
+  hidekeys
+! 
+!
+!
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+!
+!
+!
+!
+interface Loopback1
+ description UNIQUE-1 INTO LAN 
+ ip address 172.168.110.1 255.255.255.255
+!
+interface Loopback2
+ description UNIQUE-1 INTO WAN 
+ ip address 172.168.110.2 255.255.255.255
+!
+interface Loopback101
+ description COMMON-1
+ ip address 172.168.1.1 255.255.255.255
+!
+interface Loopback102
+ description COMMON-2
+ ip address 172.168.1.2 255.255.255.255
+!
+interface Loopback103
+ description COMMON-3
+ ip address 172.168.1.3 255.255.255.255
+!
+interface Loopback104
+ description COMMON-4
+ ip address 172.168.1.4 255.255.255.255
+!
+interface Loopback105
+ description COMMON-5
+ ip address 172.168.1.5 255.255.255.255
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface GigabitEthernet1/0
+ description ISP
+ ip address dhcp
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ description INTO LAN
+ ip address 10.200.0.1 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ ip address dhcp
+ negotiation auto
+!
+interface Ethernet4/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet4/1
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet4/2
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet4/3
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet4/4
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet4/5
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet4/6
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet4/7
+ no ip address
+ shutdown
+ duplex half
+!
+router ospf 100
+ log-adjacency-changes
+ network 10.200.0.0 0.0.0.3 area 0
+ network 172.168.3.0 0.0.0.7 area 1
+ network 172.168.110.1 0.0.0.0 area 3
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+!
+!
+no cdp log mismatch duplex
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+!
+end

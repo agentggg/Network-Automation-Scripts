@@ -1,7 +1,0 @@
----
-  - hosts: '192.168.0.155'
-
-    tasks:
-      - name: checking disk usage
-        shell: df > df_temp.txt
-        #checks for disk usuage and saves output to a file known as df_temp.txt on target machine root folder

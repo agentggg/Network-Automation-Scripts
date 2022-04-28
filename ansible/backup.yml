@@ -1,0 +1,17 @@
+---
+  - name: backing router configs process
+    connection: network_cli
+    gather_facts: false
+    hosts: data_center_routers
+    become: yes
+    become_method: enable
+    tasks:
+      - name: saving running config 
+        ios_config: 
+          backup: yes
+        register: backup_ios_location
+      - name: gather facts 
+        cisco.ios.ios_facts:
+          gather_subset: 
+            - interfaces
+            - hardware
